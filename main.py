@@ -38,6 +38,7 @@ configs.read('configurations.ini')
 
 config_working_dataset = configs.get('dataset', 'name')
 config_working_labels = configs.getboolean('dataset', 'label')
+config_reduction_method = configs.get('reduction', 'method')
 config_kpca_kernel = configs.get('kpca', 'used kernel')
 config_resolution = configs.getint('image', 'resolution')
 config_remote = configs.getboolean('dataset', 'remote')
@@ -65,7 +66,7 @@ print(train_x['transpose'].head(3))
 # ------------------    applying and plotting k-pca    ------------------ #
 kpca_point = imgt.KPCA(kernel=config_kpca_kernel, features_df=train_x['transpose'])
 imgt.plot_kpca(kpca_point)
-imgt.save_scatter(kpca_point, imgt.create_info(config_working_dataset, 'kpca', config_kpca_kernel, 1))
+imgt.save_scatter(kpca_point, imgt.create_info(config_working_dataset, config_reduction_method, config_kpca_kernel, 1))
 
 # ------------------    constructing the image    ------------------ #
 features_to_pixels = imgt.divide_to_pixels(scatter=kpca_point, resolution=config_resolution)
@@ -91,6 +92,12 @@ X_validation_as_image = np.expand_dims(X_validation_as_image, axis=3)
 # ------------------    create and train the model    ------------------ #
 model = CNN.create_model(config_resolution, config_resolution, config_num_of_classes)
 history = CNN.train(model, X_train_as_image, train_x['labels'], X_validation_as_image, validation_x['labels'])
+CNN.save_history(history=history, info=imgt.create_info(config_working_dataset,
+                                                        config_reduction_method,
+                                                        config_kpca_kernel,
+                                                        1)
+                 )
+
 
 """"""
 
