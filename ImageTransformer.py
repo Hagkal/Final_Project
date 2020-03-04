@@ -218,7 +218,7 @@ def save_scatter(plot_data, info, location=None, fig_size=8):
     :param fig_size: size of plot figure. defaults to 8
     """
     save_path = os.getcwd() if location is None else location
-    save_path += os.path.join(save_path, 'feature maps', info+'.png')
+    save_path = os.path.join(save_path, 'feature maps', info+'.png')
     plt.figure(figsize=(fig_size, fig_size))
     plt.scatter(plot_data[:, 0], plot_data[:, 1], edgecolor='', alpha=0.5)
     plt.savefig(save_path, dpi=200)

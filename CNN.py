@@ -7,6 +7,7 @@ from keras.layers import Dense, Conv2D, Flatten, Dropout, BatchNormalization, \
     MaxPooling2D
 from keras.models import Sequential
 from keras.utils import to_categorical
+import pickle
 
 
 def create_model(height, width, num_of_classes):
@@ -63,3 +64,15 @@ def predict(current_model, current_X_test):
     :return: predicted values corresponding to the given data
     """
     return current_model.predict(current_X_test)
+
+
+def save_history(history, info):
+    """
+    function to save the history of a training
+
+    :param history: the history object
+    :param info: info about the history of this model
+    """
+    with open('/trainHistoryDict', 'wb') as file_pi:
+        pickle.dump(history.history, file_pi)
+    pass

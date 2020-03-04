@@ -1,2 +1,4 @@
 # Project exclude paths
 /data/
+credentials.json
+testing.py
