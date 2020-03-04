@@ -2,6 +2,7 @@
 Module containing the method and definitions needed by our CNN
 """
 
+import os
 import numpy as np
 from keras.layers import Dense, Conv2D, Flatten, Dropout, BatchNormalization, \
     MaxPooling2D
@@ -73,6 +74,5 @@ def save_history(history, info):
     :param history: the history object
     :param info: info about the history of this model
     """
-    with open('/trainHistoryDict', 'wb') as file_pi:
+    with open(os.path.join(os.getcwd(), 'histories', info), 'wb') as file_pi:
         pickle.dump(history.history, file_pi)
-    pass
