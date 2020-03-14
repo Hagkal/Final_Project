@@ -21,8 +21,8 @@ iat82 = train_x.iat[8,2]
 
 
 # applying and plotting k-pca. for each feature in the training, assign X and Y as coordinates
-kpca_point = imgt.KPCA(kernel='cosine', features_df=train_x)
-imgt.plot_kpca(kpca_point)
+kpca_point = imgt.dimension_reduction(kernel='cosine', features_df=train_x)
+imgt.plot_scatter(kpca_point)
 
 # constructing the image
 features_to_pixels = imgt.divide_to_pixels(scatter=kpca_point, resolution=10)

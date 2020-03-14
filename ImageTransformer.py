@@ -7,6 +7,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.decomposition import PCA, KernelPCA
+from sklearn.manifold import TSNE
+import umap
 import os
 
 
@@ -183,7 +185,7 @@ def df_to_array_of_images(df, pixel_map, resolution, take_average_of_pixel):
 
 
 # returns a list of lists that each represent a feature coordinates in the new 2-d space
-def KPCA(kernel, features_df, fig_size=8):
+def dimension_reduction(features_df, reduction, metric, fig_size=8, **kwargs):
     """
     function to receive 2-d dimensionality reduction using k-pca
     :param kernel: the used kernel. Options (from sklearn doc):
@@ -191,14 +193,20 @@ def KPCA(kernel, features_df, fig_size=8):
     :param features_df: data with a high dimensionality
     :return: a list of each [x,y] coordinates
     """
-    k = KernelPCA()
-    kpca = KernelPCA(kernel=kernel, gamma=1, n_components=2)
-    result = kpca.fit_transform(features_df)
+    if reduction == 'kpca':
+        reducer = KernelPCA(kernel=metric, gamma=1, n_components=2)
+    elif reduction == 'umap':
+        reducer = umap.UMAP()
+    elif reduction == 'tsne':
+        reducer = TSNE(n_components=2)
+    else:
+        raise NotImplementedError(f'reduction method {reduction} is not implemented yet')
 
+    result = reducer.fit_transform(features_df)
     return result
 
 
-def plot_kpca(plot_data, fig_size=8):
+def plot_scatter(plot_data, fig_size=8):
     """
     function to plot the result of dim
     :param plot_data: the scatter to be plotted

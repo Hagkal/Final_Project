@@ -30,7 +30,7 @@ def create_model(height, width, num_of_classes):
     model.add(Conv2D(128, (3, 3), activation='relu', kernel_initializer='he_uniform', padding='same'))
     model.add(Conv2D(128, (3, 3), activation='relu', kernel_initializer='he_uniform', padding='same'))
     model.add(MaxPooling2D((2, 2)))
-    model.add(Dropout(0.4))
+    model.add(Dropout(0.6))
     model.add(Flatten())
     model.add(Dense(128, activation='relu', kernel_initializer='he_uniform'))
     model.add(Dense(num_of_classes, activation='softmax'))

@@ -38,7 +38,6 @@ def get_dataset(data_file, label_file=None, csv=True, remote=True):
     return data, label
 
 
-# normalization
 def drop_columns_with_one_value(df):
     """
     function to drop columns with only 1 value
